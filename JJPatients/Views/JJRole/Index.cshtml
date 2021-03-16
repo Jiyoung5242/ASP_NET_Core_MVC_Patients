@@ -1,0 +1,69 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@model IEnumerable<IdentityRole>
+@{
+    ViewData["Title"] = "Current Roles";
+}
+
+<h1>Current Roles</h1>
+<div asp-validation-summary="All" class="text-danger"></div>
+<form method="post" action="/JJRole/CreateRole">
+    <div class="form-group row">
+
+
+        <label class="col-sm-2 col-form-label">Create new role :</label>
+        <div class="col-sm-5">
+            <input name="RoleName" class="form-control" />
+        </div>
+        <div class="col-sm-3">
+            <button type="submit" class="btn btn-primary">Create Role</button>
+        </div>
+    </div>
+</form>
+
+@if (Model.Any())
+{
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                        <input name="roleId" type="hidden" asp-for="@item.Id" />
+                    </td>
+                    <td>
+                        <a asp-action="EditUsersInRole" asp-route-roleId="@item.Id">User In Role</a>
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            if (item.Name != "administrators")
+                            {
+                                <a asp-controller="JJRole" asp-action="DeleteRole" asp-route-roleId="@item.Id">Delete Role</a>
+                            }
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    }
+    else
+    {
+    <div class="card">
+        No Roles created
+    </div>
+    <div class="card-body">
+        <a class="btn btn-primary" asp-controller="JJRole" asp-action="CreateRole"> Add Role </a>
+    </div>
+    <div class="card-footer"></div>
+    }
+

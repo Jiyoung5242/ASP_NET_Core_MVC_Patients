@@ -1,0 +1,27 @@
+﻿@model List<UserRole>
+@{
+
+    var roleName = ViewBag.roleName;
+    var roleId = ViewBag.roleId;
+    ViewData["Title"] = "Confirm Delete of Role '" + roleName + "'";
+}
+
+<h1>@ViewData["Title"]</h1>
+<h3>Users in Role</h3>
+<div asp-validation-summary="All" class="text-danger"></div>
+<ul>
+    @foreach (var item in Model)
+    {
+        <li>@item.UserName</li>
+
+    }
+</ul>
+<form asp-action="DeleteRoleConfirmed">
+    <input type="hidden" name="roleId" value="@roleId" />
+    <input type="submit" value="Delete Confirmed" class="btn btn-primary" />
+    <a asp-controller="JJRole" asp-action="Index" class="btn btn-primary">Cancel Delete</a>
+</form>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

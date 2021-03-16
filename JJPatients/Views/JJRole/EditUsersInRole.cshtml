@@ -1,0 +1,85 @@
+﻿@model List<UserRole>
+@{
+    var roleId = ViewBag.roleId;
+    var roleName = ViewBag.roleName;
+    ViewData["Title"] = "Users In Role '" + roleName + "'";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div asp-validation-summary="All" class="text-danger"></div>
+<form method="post" action="/JJRole/AddUserInRole">
+    <div class="form-group row">
+
+        <input name="roleId" value="@roleId" hidden />
+        <label class="col-sm-2 col-form-label">User not in role :</label>
+        <div class="form-group">
+            <select name="userId" class="form-control" asp-items="ViewBag.UserIdList"></select>
+        </div>
+        <div class="col-sm-3">
+            <button type="submit" class="btn btn-primary">Add to Role</button>
+        </div>
+    </div>
+</form>
+
+
+<form id="myform" method="post" action="/JJRole/DeleteUserInRole">
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    User Name
+                </th>
+                <th>
+                    Email
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <tr>
+                    <td>
+                        <input name="userId" type="hidden" asp-for="@Model[i].UserId" />
+                        <input name="roleId" type="hidden" asp-for="@roleId" />
+                        @Model[i].UserName
+                    </td>
+                    <td>
+                        @Model[i].UserEmail
+                    </td>
+                    <td>
+                        <a href="#" onclick="document.getElementById('myform').submit()">Remove</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+
+
+    @*<div class="card">
+            <div class="card-header">
+                <h2>Add or remove Users from this role.</h2>
+            </div>
+            <div class="card-body">
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    <input type="hidden" asp-for="@Model[i].UserId" />
+                    <div class="form-check m-1">
+                        <input asp-for="@Model[i].IsSelected" class="for-check-input" />
+                        <label class="form-check-label">@Model[i].UserName</label>
+                    </div>
+                }
+            </div>
+            <div class="card-footer">
+                <input type="submit" value="Update" class="btn btn-primary" />
+                <a asp-action="EditRole" asp-route-id="@roleId" class="btn btn-primary">Cancel</a>
+            </div>
+        </div>*@
+</form>
+

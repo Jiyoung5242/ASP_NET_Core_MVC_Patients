@@ -1,0 +1,21 @@
+﻿using System;
+using JJPatients.Data;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+
+[assembly: HostingStartup(typeof(JJPatients.Areas.Identity.IdentityHostingStartup))]
+namespace JJPatients.Areas.Identity
+{
+    public class IdentityHostingStartup : IHostingStartup
+    {
+        public void Configure(IWebHostBuilder builder)
+        {
+            builder.ConfigureServices((context, services) => {
+            });
+        }
+    }
+}
